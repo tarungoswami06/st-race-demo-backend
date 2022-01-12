@@ -2,7 +2,7 @@
 
 This repo contains source code of ST Trot Race Demo Project.
 
-First, Create an .env file locally. You can duplicate .env.sample and name the new copy .env. Adapt the variables to your needs.
+First, Create an .env file locally. You can duplicate .env.sample and name the new copy as .env. Add the variables value as per your needs and configuration.
 
 ## Docker configuration
 
@@ -55,12 +55,6 @@ npm install
 ```
 npm start
 ```
-
-<!-- ### Running application in Development env
-
-```
-npm start:dev
-``` -->
 
 ## Directory Structure
 
