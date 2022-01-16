@@ -4,7 +4,7 @@ import { RaceEventModel } from "../models/raceEventModel";
 
 
 describe("Database integration operations", () => {
-  const startEvent: HorseEventInterface = {
+  const startEvent: HorseEventInterface = {  // Horse event interface schema
     event: "start",
     horse: {
       id: 14,
@@ -15,7 +15,7 @@ describe("Database integration operations", () => {
   let recordId: string;
 
   // Checking if db is connected properly
-  it("should connect db successfully", async () => {  
+  it("should connect db successfully", async () => {
     const connection = await app.connectDB();
     expect(connection).toBeTruthy();
   });

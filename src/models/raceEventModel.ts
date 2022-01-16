@@ -1,7 +1,7 @@
-import mongoose, { model } from "mongoose";
-import { HorseEventInterface } from "../interfaces/raceEventInterface";
+import mongoose, { model } from "mongoose";  // importing mongoose package library
+import { HorseEventInterface } from "../interfaces/raceEventInterface";  // importing horse event interface
 
-const horseEventSchema = new mongoose.Schema(
+const horseEventSchema = new mongoose.Schema(  // schemea for horse events
   {
     event: {
       type: String,

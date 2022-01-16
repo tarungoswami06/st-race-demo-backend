@@ -1,7 +1,7 @@
-import { authResponseInterface } from "../interfaces/authResponseInterface";
-import { API } from "../config/constants";
-import CommonRestAPI from "../util/commonRestAPI";
-import { apiParamsInterface } from "../interfaces/apiParamInterface";
+import { authResponseInterface } from "../interfaces/authResponseInterface";  // importing authentication response interface
+import { API } from "../config/constants";  // importing self configured constants 
+import CommonRestAPI from "../util/commonRestAPI";  // importing common rest api for axios call of specific endpoints
+import { apiParamsInterface } from "../interfaces/apiParamInterface";  // importing api params interface
 
 
 class AccessTokenMiddleware {
@@ -13,7 +13,7 @@ class AccessTokenMiddleware {
 
     async getAccessToken() { // Generating and saving the token in an variable for reuse
         try {
-            const tokenResponse: authResponseInterface = await this.generateAccessToken();
+            const tokenResponse: authResponseInterface = await this.generateAccessToken();  // calling generate token method
             this.token = tokenResponse.data.token;
         } catch (error) {
             console.log('error...', error);
@@ -28,14 +28,14 @@ class AccessTokenMiddleware {
         }
         const { endpoint, method, header } = API.AuthToken;
         const paramaters: apiParamsInterface = {
-          endPoints: endpoint,
-          params: credentials,
-          method: method,
-          token: "",
-          header: header,
+            endPoints: endpoint,
+            params: credentials,
+            method: method,
+            token: "",
+            header: header,
         };
 
-        const result: authResponseInterface = await this.callAPI(paramaters);
+        const result: authResponseInterface = await this.callAPI(paramaters);  // calling auth token api and returing the result data
         return result;
     }
 

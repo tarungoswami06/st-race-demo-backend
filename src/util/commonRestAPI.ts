@@ -4,7 +4,7 @@ import { apiParamsInterface } from "../interfaces/apiParamInterface";
 class CommonRestAPI {
   // Common function for API call
   async callAPI(parameters: apiParamsInterface) {
-    // Set simulator API URL
+    // Set simulator API Base URL
     const simulatorUrl: string = process.env.API_BASE_URL || "";
     // API URL with end point
     const URL = `${simulatorUrl}${parameters.endPoints}`;

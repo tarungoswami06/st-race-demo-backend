@@ -25,5 +25,3 @@ export const API = {
   Results: { endpoint: "/results", method: METHOD.GET, header: headers },
 };
 
-// Event delay time in seconds for long-pooling
-export const EVENT_DELAY = 15 * 1000; // 15 seconds

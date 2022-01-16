@@ -1,6 +1,6 @@
 import accessTokenMiddleware from "../middlewares/validateToken"; // Middleware for generating and validating access token
 import TrotService from "../services/trotService"; // importing Service for doing api's operations
-import { StatusCodes } from "http-status-codes";
+import { StatusCodes } from "http-status-codes"; // Package for http status codes
 
 
 class RaceService {
@@ -30,15 +30,15 @@ class RaceService {
       const response = await this.trotService.processRaceEvents(token);
       if (response.status === StatusCodes.NO_CONTENT) {
         console.log('Request timeout, Hence making new request');
-        this.trotEvents(token);
-      } else if(response.status === StatusCodes.UNAUTHORIZED) {
+        this.trotEvents(token);  // Making new request when response status code is 204 (No Content)
+      } else if (response.status === StatusCodes.UNAUTHORIZED) {
         console.log('Session expired, Hence re-authorizing the user');
-        await this.initiateSimulator();
+        await this.initiateSimulator();  // Re authorizing user when response status code is 401 (Unauthorized)
       }
       this.trotEvents(token);  // getting events recursively
     } catch (error) {
       console.log('Error fetching events in controller');
-      await this.initiateSimulator();
+      await this.initiateSimulator();  // In case of error re initiating the Simulator
     }
   }
 }
