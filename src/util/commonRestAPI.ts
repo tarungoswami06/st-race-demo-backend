@@ -15,7 +15,7 @@ class CommonRestAPI {
       headers: parameters.header,
       data: parameters.params,
     };
-    var result: any;
+    let result: any;
     return await axios(axiosParams)
       .then((response) => {
         result = response;
