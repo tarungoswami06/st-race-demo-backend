@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { authResponseInterface } from "../interfaces/authResponseInterface";
 import { API } from "../config/constants";
 import CommonRestAPI from "../util/commonRestAPI";

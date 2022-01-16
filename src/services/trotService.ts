@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { RaceEventModel } from "../models/raceEventModel"; 
 import { EventInterface } from "../interfaces/eventsInterface";  // interface for events response
 import { StatusCodes } from "http-status-codes";
@@ -12,7 +11,7 @@ class TrotService {
 
 async processRaceEvents(token: string) : Promise<EventInterface> {  // Service function to fetch all events from server and saving the same into db.
   const eventResponse: EventInterface = await this.fetchAllEvents(token);
-  if (eventResponse.status === StatusCodes.NO_CONTENT) {
+  if (eventResponse.status === StatusCodes.OK) {
     const eventModel = new RaceEventModel({
       event: eventResponse.data.event,
       horse: eventResponse.data.horse,
@@ -36,10 +35,6 @@ async fetchAllEvents(token: string): Promise<EventInterface> {  // Fetching all 
       horse: { id: 0, name: "" },
       time: 0,
     },
-  };
-  const headers = {
-    'Content-Type': 'application/json',
-    Authorization: `Bearer ${token}`,
   };
   try {
     const { endpoint, method, header } = API.Results;

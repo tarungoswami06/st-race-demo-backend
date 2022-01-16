@@ -33,12 +33,12 @@ class RaceService {
         this.trotEvents(token);
       } else if(response.status === StatusCodes.UNAUTHORIZED) {
         console.log('Session expired, Hence re-authorizing the user');
-        this.initiateSimulator();
+        await this.initiateSimulator();
       }
       this.trotEvents(token);  // getting events recursively
     } catch (error) {
       console.log('Error fetching events in controller');
-      this.initiateSimulator();
+      await this.initiateSimulator();
     }
   }
 }

@@ -5,7 +5,7 @@ class CommonRestAPI {
   // Common function for API call
   async callAPI(parameters: apiParamsInterface) {
     // Set simulator API URL
-    const simulatorUrl: string = process.env.API_ROOT || "";
+    const simulatorUrl: string = process.env.API_BASE_URL || "";
     // API URL with end point
     const URL = `${simulatorUrl}${parameters.endPoints}`;
     // API Call Params
@@ -15,13 +15,15 @@ class CommonRestAPI {
       headers: parameters.header,
       data: parameters.params,
     };
-
+    var result: any;
     return await axios(axiosParams)
       .then((response) => {
+        result = response;
         return response;
       })
-      .catch((error) => {
-        return error;
+      .catch((error: any) => {
+        result = error.response;
+        return result;
       });
   }
 }
