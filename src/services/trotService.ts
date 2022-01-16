@@ -47,6 +47,7 @@ class TrotService {
         },
       };
       const result: EventInterface = await this.callAPI(paramaters);  // Calling result api to fetch the events
+      console.log('Status Code',result.status);
       if (result.status === StatusCodes.OK) {
         eventResponse.data = result.data;
         eventResponse.status = result.status;
