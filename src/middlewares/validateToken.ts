@@ -1,10 +1,13 @@
 import axios from 'axios';
 import { authResponseInterface } from "../interfaces/authResponseInterface";
+import { API } from "../config/constants";
+import CommonRestAPI from "../util/commonRestAPI";
+import { apiParamsInterface } from "../interfaces/apiParamInterface";
 
 
 class AccessTokenMiddleware {
     token = ""
-
+    callAPI = new CommonRestAPI().callAPI;
     constructor(_token: string) {
         this.token = _token;
     }
@@ -20,12 +23,20 @@ class AccessTokenMiddleware {
     }
 
     async generateAccessToken() {  // Generating token by calling auth api with valid credentials
-        const body = {
-            email: process.env.AUTH_EMAIL,
-            password: process.env.AUTH_PASSWORD
+        const credentials = {
+            email: process.env.AUTH_EMAIL || "",
+            password: process.env.AUTH_PASSWORD || "",
         }
-        const url = process.env.API_BASE_URL + `/auth`;
-        const result = await axios.post(url, body);
+        const { endpoint, method, header } = API.AuthToken;
+        const paramaters: apiParamsInterface = {
+          endPoints: endpoint,
+          params: credentials,
+          method: method,
+          token: "",
+          header: header,
+        };
+
+        const result: authResponseInterface = await this.callAPI(paramaters);
         return result;
     }
 

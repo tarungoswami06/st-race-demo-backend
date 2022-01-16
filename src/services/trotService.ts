@@ -1,12 +1,18 @@
 import axios from 'axios';
 import { RaceEventModel } from "../models/raceEventModel"; 
 import { EventInterface } from "../interfaces/eventsInterface";  // interface for events response
+import { StatusCodes } from "http-status-codes";
+import { API } from "../config/constants";
+import { apiParamsInterface } from "../interfaces/apiParamInterface";
+import CommonRestAPI from "../util/commonRestAPI";
+
 
 class TrotService {
+  callAPI = new CommonRestAPI().callAPI;
 
 async processRaceEvents(token: string) : Promise<EventInterface> {  // Service function to fetch all events from server and saving the same into db.
   const eventResponse: EventInterface = await this.fetchAllEvents(token);
-  if (eventResponse.status === 200) {
+  if (eventResponse.status === StatusCodes.NO_CONTENT) {
     const eventModel = new RaceEventModel({
       event: eventResponse.data.event,
       horse: eventResponse.data.horse,
@@ -35,23 +41,32 @@ async fetchAllEvents(token: string): Promise<EventInterface> {  // Fetching all 
     'Content-Type': 'application/json',
     Authorization: `Bearer ${token}`,
   };
-  const url = process.env.API_BASE_URL + `/results`;
   try {
-    const result: EventInterface = await axios.get(url, { headers: headers });
+    const { endpoint, method, header } = API.Results;
+      const paramaters: apiParamsInterface = {
+        endPoints: endpoint,
+        method: method,
+        token: token,
+        header: {
+          ...header,
+          Authorization: "Bearer " + token
+        },
+      };
+      const result: EventInterface = await this.callAPI(paramaters);
     console.log('status in get events', result.status);
-    if (result.status === 200) {
+    if (result.status === StatusCodes.OK) {
       eventResponse.data = result.data;
       eventResponse.status = result.status;
-    } else if (result.status === 401) {
+    } else if (result.status === StatusCodes.UNAUTHORIZED) {
       eventResponse.status = result.status;
-    } else if (result.status === 204) {
+    } else if (result.status === StatusCodes.NO_CONTENT) {
       eventResponse.status = result.status;
     }
   } catch (err: any) {
     if (
       err &&
       err.response &&
-      err.response.status === 401
+      err.response.status === StatusCodes.UNAUTHORIZED
     ) {
       eventResponse.status = err.response.status;
     } else {
